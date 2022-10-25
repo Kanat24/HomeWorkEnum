@@ -4,23 +4,34 @@ import java.util.concurrent.ThreadLocalRandom;
 
 class Truck extends Transport implements Competing{
     public enum LoadСapacity {
-        N1(3.5),
-        N2(12),
-        N3(12);
-        private double weight;
-        LoadСapacity(double weight) {
-            this.weight = weight;
+        N1(0,3.5),
+        N2(3.5,12),
+        N3(12, 100);
+        private double afterWeight;
+        private double beforeWeight;
+
+        LoadСapacity(double afterWeight, double beforeWeight) {
+            this.afterWeight = afterWeight;
+            this.beforeWeight = beforeWeight;
         }
 
-        public double getWeight() {
-            return weight;
+        public double getAfterWeight() {
+            return afterWeight;
         }
 
-        public void setWeight(int weight) {
-            this.weight = weight;
+        public void setAfterWeight(double afterWeight) {
+            this.afterWeight = afterWeight;
         }
 
-        public static void defineBodyType(Truck car ,double weight) {
+        public double getBeforeWeight() {
+            return beforeWeight;
+        }
+
+        public void setBeforeWeight(double beforeWeight) {
+            this.beforeWeight = beforeWeight;
+        }
+
+        public static void defineBodyType(Truck car , double weight) {
             if (weight<=3.5){
                 System.out.println("Грузовой автомобиль " + car+ " принадлежит категории " + N1);
             }
@@ -33,9 +44,10 @@ class Truck extends Transport implements Competing{
             else System.out.println("данных по авто недостаточно");
         }
     }
-
-    public Truck(String brand, String model, double engineVolume) {
+    private LoadСapacity loadСapacity;
+    public Truck(String brand, String model, double engineVolume, LoadСapacity loadСapacity) {
         super(brand, model, engineVolume);
+        this.loadСapacity =loadСapacity;
     }
 
     @Override
@@ -47,6 +59,11 @@ class Truck extends Transport implements Competing{
     @Override
     public void finish() {
         System.out.printf("Грузовой автомобиль %s, %s фигишировал\n", getBrand(), getModel());
+    }
+
+    @Override
+    public boolean passDiagnostics() {
+        return Math.random()>0.5;
     }
 
     @Override

@@ -1,8 +1,10 @@
 package racing;
 
+import java.util.Objects;
+
 public abstract class Driver <T extends Transport> {
     private final String fullName;
-    private final String category;
+    private String category;
     private int experience;
     private T car;
 
@@ -33,9 +35,16 @@ public abstract class Driver <T extends Transport> {
         this.experience = experience;
     }
 
+    public void setCategory(String category) {
+        if (category==null){
+            throw new RuntimeException("Необходимо ввести номер страховки");
+        }
+        this.category = category;
+    }
+
     public Driver(String fullName, String category, int experience, T car) {
         this.fullName = fullName;
-        this.category = category;
+        setCategory(category);
         this.experience = experience;
         this.car = car;
     }
@@ -44,5 +53,18 @@ public abstract class Driver <T extends Transport> {
     public String toString() {
         return String.format("Водитель %s управляет автомобилем %s %s и будет участвовать в заезде", getFullName(),
                 car.getBrand(), car.getModel());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Driver<?> driver = (Driver<?>) o;
+        return experience == driver.experience && Objects.equals(fullName, driver.fullName) && Objects.equals(category, driver.category) && Objects.equals(car, driver.car);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fullName, category, experience, car);
     }
 }

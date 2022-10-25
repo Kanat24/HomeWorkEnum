@@ -3,6 +3,7 @@ package racing;
 import java.util.concurrent.ThreadLocalRandom;
 
 class Car extends Transport implements Competing {
+    private BodyType bodyType;
     public enum BodyType{SEDAN, HATCHBACK, COUPE, STATION_WAGON,
         SUV, CROSSOVER, PICKUP, VAN, MINIVAN;
 
@@ -46,8 +47,9 @@ class Car extends Transport implements Competing {
 
 
 
-    public Car(String brand, String model, double engineVolume) {
+    public Car(String brand, String model, double engineVolume, BodyType bodyType) {
         super(brand, model, engineVolume);
+        this.bodyType = bodyType;
     }
 
     @Override
@@ -65,6 +67,12 @@ class Car extends Transport implements Competing {
     @Override
     public void pitStop() {
         System.out.printf("Автомобиль %s, %s заехал на пит стоп\n", getBrand(), getModel());
+
+    }
+
+    @Override
+    public boolean passDiagnostics() {
+       return Math.random()>0.5;
 
     }
 
