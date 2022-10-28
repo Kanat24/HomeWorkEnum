@@ -1,5 +1,8 @@
 package racing;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Transport {
@@ -7,6 +10,9 @@ public abstract class Transport {
     protected final String brand;
     protected final String model;
     protected final double engineVolume;
+    private final List<Sponsor> sponsors = new ArrayList<>();
+    private final List<Driver<?>> drivers = new ArrayList<>();
+    private final List<Mechanic<?>>mechanics = new ArrayList<>();
 
 
     public Transport(String brand, String model, double engineVolume) {
@@ -27,7 +33,27 @@ public abstract class Transport {
     public double getEngineVolume() {
         return engineVolume;
     }
+    public void addDriver(Driver<?>...driver){
+        this.drivers.addAll(Arrays.asList(driver));
+    }
+    public void addSponsor(Sponsor...sponsors){
+        this.sponsors.addAll(Arrays.asList(sponsors));
+    }
+    public void addMechanic(Mechanic<?>...mechanics){
+        this.mechanics.addAll(Arrays.asList(mechanics));
+    }
 
+    public List<Sponsor> getSponsors() {
+        return sponsors;
+    }
+
+    public List<Driver<?>> getDrivers() {
+        return drivers;
+    }
+
+    public List<Mechanic<?>> getMechanics() {
+        return mechanics;
+    }
 
     @Override
     public String toString() {
